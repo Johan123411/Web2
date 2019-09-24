@@ -1,0 +1,19 @@
+{
+  "name": "siddhant_barua",
+  "version": "1.0.0",
+  "description": "Lab 4",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "siddhant_barua",
+  "license": "ISC",
+  "dependencies": {
+    "blubird": "0.0.1-security",
+    "bluebird": "^3.5.3",
+    "express": "^4.16.4",
+    "node-redis": "^0.1.7",
+    "redis": "^2.8.0"
+  }
+}

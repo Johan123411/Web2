@@ -1,0 +1,53 @@
+img_original = input_image.copy()
+    hessian_image = other_extreme_final_i.copy()
+    hough_image =  final_hough_img.copy()
+
+    hough_img_arr = np.array(hough_image)
+    hough_row_space,hough_col_space = hough_img_arr.shape
+
+    row, col = np.asarray(img_original).shape
+
+    offset = int((hough_row_space)/2)
+
+    point_list = []
+    maximum_points = 0
+    point_no = 10
+    imagedraw1= ImageDraw.Draw(img_original)
+    imagedraw2= ImageDraw.Draw(hessian_image)
+
+    hough_img_arr.setflags(write=1)
+    while(point_no != 0):
+        for i in range(0,hough_row_space):
+            for j in range(0, hough_col_space):
+                if(hough_img_arr[i][j]> maximum_points):
+                    maximum_points = hough_img_arr[i][j]
+                    row = i - offset
+                    angle = j
+                    new_i = i
+                    new_j = j
+        hough_img_arr[new_i][new_j]=0
+        a= mt.cos(mt.radians(angle))
+        b = mt.sin(mt.radians(angle))
+        x0 = int(row * a)
+        y0 = int(row * b)
+        m = (-mt.cos(mt.radians(angle))) / (mt.sin(mt.radians(angle)))
+        c = row / (mt.sin(mt.radians(angle)))
+        x1 = x0 + 400
+        y1 = (x1 * m) + c
+        x2 = x0 - 50
+        y2 = (x2 * m) + c
+
+        if (point_no in [10, 9, 8, 2]):
+            imagedraw1 = endpt_draw(imagedraw1, x1, y1, x2, y2)
+            imagedraw1.line((x0, y0, x1, y1), fill=255)
+            imagedraw1.line((x0, y0, x2, y2), fill=255)
+            imagedraw2 = endpt_draw(imagedraw2, x1, y1, x2, y2)
+            imagedraw2.line((x0, y0, x1, y1), fill=255)
+            imagedraw2.line((x0, y0, x2, y2), fill=255)
+        hough_img_arr[row + offset][angle] = 0
+        point_list.append([row + offset, angle])
+        no_of_pts = point_no - 1
+        max_pt = 0
+
+    other_extreme_final_i.show()
+    input_image.show()
